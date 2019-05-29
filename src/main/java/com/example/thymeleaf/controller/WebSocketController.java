@@ -28,18 +28,16 @@ public class WebSocketController {
     @Scheduled(fixedRate = 10000)
     @RequestMapping("/websocket")
     public void sendTopicMessage() {
-        logger.info("----后台广播推送----");
-        logger.error("----后台广播推送----");
-        User user = new User();
-        user.setUserName("张文杰");
-        user.setAge(18);
-        this.template.convertAndSend("/topic/getResponse", user);
-        try {
-            list.get(0);
-        } catch (Exception e) {
-            logger.error("----后台广播推送错误----", e);
-        }
 
+        long start =System.currentTimeMillis();
+        for(int i=0;i<2000000;i++){
+            logger.info("----后台广播推送----");
+            User user = new User();
+            user.setUserName("张文杰");
+            user.setAge(18);
+            this.template.convertAndSend("/topic/getResponse", user);
+        }
+        System.out.println("------------总耗时----------------"+(System.currentTimeMillis()-start)/1000 +" 秒");
     }
 
     /**
