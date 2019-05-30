@@ -14,6 +14,7 @@ import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.cache.RedisCacheWriter;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 
 /**
@@ -76,9 +77,9 @@ public class RedisConfig extends CachingConfigurerSupport {
      * @return
      */
     @Bean
-    public RedisTemplate<String, Object> redisTemplate(LettuceConnectionFactory factory) {
+    public RedisTemplate<String, String> redisTemplate(LettuceConnectionFactory factory) {
         //创建Redis缓存操作助手RedisTemplate对象
-        RedisTemplate<String, Object> template = new RedisTemplate<String, Object>();
+        StringRedisTemplate template = new StringRedisTemplate();
         template.setConnectionFactory(factory);
         //以下代码为将RedisTemplate的Value序列化方式由JdkSerializationRedisSerializer更换为Jackson2JsonRedisSerializer
         //此种序列化方式结果清晰、容易阅读、存储字节少、速度快，所以推荐更换
